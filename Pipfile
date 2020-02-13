@@ -8,6 +8,8 @@ verify_ssl = true
 [packages]
 jupyter = "*"
 requests-html = "*"
+psycopg2 = "*"
+psycopg2-binary = "*"
 
 [requires]
 python_version = "3.7"
