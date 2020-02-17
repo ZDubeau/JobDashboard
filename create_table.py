@@ -20,6 +20,28 @@ def connect():
 
 commands = (
     """
+    CREATE TABLE IF NOT EXISTS offre_brute (
+        id SERIAL PRIMARY KEY,
+        ref VARCHAR(20),
+        titre VARCHAR(30),
+        entreprise VARCHAR(30),
+        ville VARCHAR(40),
+        departement VARCHAR(30),
+        region VARCHAR(30),
+        date_publication VARCHAR(30),
+        date_maj VARCHAR(30),
+        experience VARCHAR(50),
+        salaire VARCHAR(50),
+        type_contrat VARCHAR(20),
+        diplome TEXT,
+        secteur TEXT,
+        site_origine VARCHAR(20),
+        lien_site TEXT,
+        corps TEXT
+    )
+    """
+    ,
+    """
     CREATE TABLE IF NOT EXISTS intitule (
         id SERIAL PRIMARY KEY,
         nom VARCHAR(30),
@@ -76,7 +98,6 @@ commands = (
         intitule INTEGER REFERENCES intitule (id),
         diplome_min VARCHAR(30),
         diplome_max VARCHAR(30),
-        secteur_activite INTEGER,
         site_origine VARCHAR(20),
         lien_site TEXT,
         corps TEXT

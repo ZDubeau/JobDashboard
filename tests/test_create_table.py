@@ -16,6 +16,8 @@ def test_connexion():
 def test_tables():
     with ct.connect() as conn:
         cur = conn.cursor()
+        cur.execute("SELECT COUNT(*) FROM offre_brute")
+        assert cur.fetchall() == [(0,),]
         cur.execute("SELECT COUNT(*) FROM offre")
         assert cur.fetchall() == [(0,),]
         cur.execute("SELECT COUNT(*) FROM intitule")
