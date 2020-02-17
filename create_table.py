@@ -33,6 +33,7 @@ commands = (
         experience VARCHAR(50),
         salaire VARCHAR(50),
         type_contrat VARCHAR(20),
+        intitule VARCHAR(30),
         diplome TEXT,
         secteur TEXT,
         site_origine VARCHAR(20),
