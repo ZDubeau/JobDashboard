@@ -1,0 +1,64 @@
+*{
+	background-color: #eeeeee;
+	font-family: Verdana, Arial, "sans serif";
+}
+
+div{
+	border: solid 1px black;
+}
+
+.onglet{
+	width: 160px;
+	padding: 4px 7px;
+	float: left;
+}
+
+.onglet_gauche{
+	-webkit-border-radius
+}
+
+.actif{
+	background-color: white;
+}
+
+#page{
+	clear: both;
+	border-radius: 16px;
+	height: 592px;
+	-webkit-border-radius: 16px;
+}
+
+#page div{
+	background-color: white;
+}
+
+#page h1{
+	padding: 0 0 0 16px;
+}
+
+#carte{
+	float: left;
+	margin-left: 82px;
+	height: 500px;
+	width: 400px;
+	background-color: yellow;
+}
+
+.hor, .vert{
+	padding: 5px;
+}
+
+.hor{
+	margin-left: 60px;
+	float: left;
+	height: 244px;
+	width: 700px;
+}
+
+#courbe{
+	background-color: lightblue;
+}
+
+.schema p{
+	margin: auto;
+}
