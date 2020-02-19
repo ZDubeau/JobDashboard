@@ -23,7 +23,7 @@ commands = (
     CREATE TABLE IF NOT EXISTS offre_brute (
         id SERIAL PRIMARY KEY,
         ref VARCHAR(20),
-        titre VARCHAR(30),
+        titre VARCHAR(50),
         entreprise VARCHAR(30),
         ville VARCHAR(40),
         departement VARCHAR(30),
@@ -84,7 +84,7 @@ commands = (
     CREATE TABLE IF NOT EXISTS offre (
         id SERIAL PRIMARY KEY,
         ref VARCHAR(20),
-        titre VARCHAR(30),
+        titre VARCHAR(50),
         entreprise VARCHAR(30),
         ville VARCHAR(5) REFERENCES ville (code_insee),
         departement VARCHAR(3) REFERENCES departement (code_dep),
