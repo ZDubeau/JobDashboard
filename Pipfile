@@ -8,8 +8,12 @@ verify_ssl = true
 [packages]
 jupyter = "*"
 requests-html = "*"
-psycopg2 = "*"
 psycopg2-binary = "*"
+pytest = "*"
+plotly = "*"
+seaborn = "*"
+pandas = "*"
+flask = "*"
 
 [requires]
 python_version = "3.7"
