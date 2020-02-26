@@ -45,7 +45,7 @@ def get_volume_chart(unite="j"):
             ax.set(ylim=plt.ylim(bottom=0))
 
             titre = f"volume-{lib_unite}-"+dt.today().isoformat().split("T")[0]
-            plt.savefig("img/"+titre)
+            plt.savefig("static/"+titre)
 
             balise = f'<img src="{titre}" alt="Volume d\'annonces par {lib_unite}" />'
         

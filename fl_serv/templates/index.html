@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Job Dashbard</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+	</head>
+	<body>
+		<!--<div class="onglet actif onglet_gauche">État du marché</div>
+		<div class="onglet onglet_droit">Moteur de recherche</div>-->
+		<div id="page">
+
+			<h1>État du marché au {{ aujourdhui}}</h1>
+			<p>{{ nb_today }} nouvelles annonces, {{ nb_total }} annonces dans la base</p>
+			<div>
+				<div id="carte" class="schema vert">
+					{{ carte|safe }}
+				</div>
+				<div id="courbe" class="schema hor">
+					{{ volume_mj|safe }}
+				</div>
+				<div id="camembert" class="schema hor">
+					{{ camembert|safe }}
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

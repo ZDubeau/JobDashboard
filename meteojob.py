@@ -22,15 +22,24 @@ def get_from_meteojob(url):
 
 
     contenu = meteo.html.find(".mj-offer-details",first=True)
+    if contenu is None:
+        print(meteo.html.text)
     annonce = {}
     annonce["Titre"] = contenu.find("h1",first=True).text
     annonce["Date_publication_txt"] = contenu.find(".publication-date",first=True).text
-    cont_json = meteo.html.find(".mj-column-content script",first=True)
-    if cont_json is not None and cont_json != "":
-        cont_json=json.loads(cont_json.text)
-        annonce["Date_publication"] = cont_json["datePosted"].split("T")[0]
-    else:
-        annonce["Date_publication"] = annonce["Date_publication_txt"]
+    cont_json = meteo.html.find(".mj-column-content script")
+    for j in cont_json:
+        if j.attrs["type"] == "application/ld+json":
+            cont = j.text
+            if cont is not None and cont != "":
+                try:
+                    cont=json.loads(json)
+                    annonce["Date_publication"] = cont["datePosted"].split("T")[0]
+                except Exception as e:
+                    #print(cont)
+                    annonce["Date_publication"] = annonce["Date_publication_txt"]
+            else:
+                annonce["Date_publication"] = annonce["Date_publication_txt"]
 
     items = contenu.find(".matching-criterion-wrapper")
     criteres = []
@@ -108,7 +117,7 @@ def get_all_meteojob():
                 break
             annonces.append(curannonce)
 
-            sleep(2)
+            sleep(1)
 
     return annonces
 
