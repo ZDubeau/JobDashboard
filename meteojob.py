@@ -23,6 +23,20 @@ def get_from_meteojob(url):
 
     contenu = meteo.html.find(".mj-offer-details",first=True)
     annonce = {}
+
+    annonce["Titre"] = "NaN"
+    annonce["Date_publication"] = "NaN"
+    annonce["intitule"] = "NaN"
+    annonce["ville"] = "NaN"
+    annonce["code_dep"] = "NaN"
+    annonce["Type_contrat"] = "NaN"
+    annonce["Exp"] = "NaN"
+    annonce["Diplome"] = "NaN"
+    annonce["Entreprise"] = "NaN"
+    annonce["Salaire"] = "NaN"
+    annonce["corps"] = "NaN"
+    annonce["Lien"] = "NaN"
+    
     annonce["Titre"] = contenu.find("h1",first=True).text
     annonce["Date_publication_txt"] = contenu.find(".publication-date",first=True).text
     cont_json = meteo.html.find(".mj-column-content script",first=True)
@@ -42,9 +56,9 @@ def get_from_meteojob(url):
         if "(H/F)" in crit:
             annonce["intitule"] = crit
         elif crit.endswith(")"):
-            lieu = crit.split(" ")
+            lieu = crit.split("(")
             annonce["ville"] = lieu[0]
-            annonce["code_dep"] = lieu[1][1:-1]
+            annonce["code_dep"] = lieu[1].replace(')', '')
         elif crit in ("CDI","CDI-C","CDD","Interim","Stage"):
             annonce["Type_contrat"] = crit
         elif crit.startswith("Expérience"):
@@ -120,4 +134,4 @@ if __name__ == "__main__":
         retour = get_all_meteojob()
         print(len(retour),retour[0])
     else:
-        print(get_from_meteojob(adresse))
+        print(get_from_meteojob(adresse)) 
