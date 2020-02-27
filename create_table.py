@@ -110,6 +110,14 @@ commands = (
     """
     ,
     """
+    CREATE TABLE IF NOT EXISTS offre_intitule (
+        id_offre integer REFERENCES offre(id),
+        id_intitule integer REFERENCES intitule(id),
+        CONSTRAINT PK_o_i PRIMARY KEY(id_offre,id_intitule)
+    )
+    """
+    ,
+    """
     CREATE TABLE IF NOT EXISTS offre_secteur (
         id_secteur INTEGER REFERENCES secteur (id),
         id_offre INTEGER REFERENCES offre (id),
@@ -177,7 +185,7 @@ if __name__== "__main__":
         for command in commands:
             query(conn,command)
         try:
-            insert_villes(conn)
+            pass#insert_villes(conn)
         except Exception as e:
             pass
         finally:
