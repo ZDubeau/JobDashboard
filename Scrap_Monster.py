@@ -52,5 +52,5 @@ if debut:
                 #    print(ligne_courante)
                     annonce_memorisee.append(ligne_courante)
 
-    #    print(annonce_memorisee)
+        print(annonce_memorisee)
 
