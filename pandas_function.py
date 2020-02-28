@@ -206,11 +206,7 @@ def insertion(annonces):
                 print(clean["code_dep"])
                 sql = "SELECT code_insee, code_dep FROM ville WHERE nom = %s AND code_dep = %s"
                 params = (clean["ville"][0].strip(),clean["code_dep"][0])
-                try:
-                    cur.execute(sql,params)
-                    print("arg")
-                except Exception as e:
-                    print(traceback.format_exc())
+                cur.execute(sql,params)
                     
 
             else:
@@ -235,6 +231,7 @@ def insertion(annonces):
                 region = region[0][0]
             else:
                 region = None
+                code_dep = None
         
         if clean["intitule"].get(0):
             intitules = []
