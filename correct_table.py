@@ -1,35 +1,54 @@
 import create_table as ct
 
 commands = (
-    #"""
-    #ALTER TABLE ville
-    #MODIFY nom TYPE varchar(50);
-    #"""
-    #,
-    #"""
-    #ALTER TABLE ville
-    #ADD latitude float;
-    #"""
-    #,
-    #"""
-    #ALTER TABLE ville
-    #ADD longitude float;
-    #"""
-    #,
-
     """
-    ALTER TABLE intitule 
-    ALTER nom TYPE varchar(51);
+    UPDATE intitule
+    SET nom = 'Big Data'
+    WHERE alias LIKE '%Big Data%'
+    AND nom IS NULL;
     """
     ,
     """
-    ALTER TABLE offre
-    ALTER titre TYPE varchar(100);
+    UPDATE intitule
+    SET nom = 'BI'
+    WHERE (alias LIKE '%BI%'
+    OR alias LIKE '%usiness%')
+    AND nom IS NULL
     """,
 
     """
-    ALTER TABLE intitule 
-    ALTER alias TYPE varchar(51);
+    UPDATE intitule
+    SET nom = 'Data analyst'
+    WHERE alias LIKE '%nalyst%'
+    AND nom IS NULL;
+    """
+    ,
+    """
+    UPDATE intitule
+    SET nom = 'Système'
+    WHERE alias LIKE '%yst%'
+    AND nom IS NULL;
+    """
+    ,
+    """
+    UPDATE intitule
+    SET nom = 'Manager'
+    WHERE alias LIKE '%anager%'
+    AND nom IS NULL;
+    """
+    ,
+    """
+    UPDATE intitule
+    SET nom = 'Data scientist'
+    WHERE alias LIKE '%cientist%'
+    AND nom IS NULL;
+    """
+    ,
+    """
+    UPDATE intitule
+    SET nom = 'Développeur'
+    WHERE alias LIKE '%velop%'
+    AND nom IS NULL;
     """)
 
 
