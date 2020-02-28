@@ -2,7 +2,7 @@ import psycopg2
 
 def connect():
     """ Connect to the PostgreSQL database server """
-
+    conn = None
     try:
         # connect to the PostgreSQL server
         print('Connecting to the PostgreSQL database...')
@@ -12,8 +12,9 @@ def connect():
                                 password = "dashboard",
                                 port = 5432)
 
-    except:
+    except Exception as inst:
             print("I am unable to connect to the database")
+            print(inst)
     
     return conn
 
