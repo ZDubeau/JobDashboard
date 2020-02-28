@@ -60,7 +60,7 @@ commands = (
     CREATE TABLE IF NOT EXISTS offre_brute (
         id SERIAL PRIMARY KEY,
         ref VARCHAR(20),
-        titre VARCHAR(50),
+        titre VARCHAR(100),
         entreprise VARCHAR(30),
         ville VARCHAR(40),
         departement VARCHAR(30),
@@ -82,8 +82,8 @@ commands = (
     """
     CREATE TABLE IF NOT EXISTS intitule (
         id SERIAL PRIMARY KEY,
-        nom VARCHAR(50),
-        alias VARCHAR(50)
+        nom VARCHAR(30),
+        alias VARCHAR(75)
     )
     """
     ,
@@ -123,8 +123,8 @@ commands = (
     CREATE TABLE IF NOT EXISTS offre (
         id SERIAL PRIMARY KEY,
         ref VARCHAR(20),
-        titre VARCHAR(50),
-        entreprise VARCHAR(30),
+        titre VARCHAR(100),
+        entreprise VARCHAR(50),
         ville VARCHAR(5) REFERENCES ville (code_insee),
         departement VARCHAR(3) REFERENCES departement (code_dep),
         region VARCHAR(3) REFERENCES region (code_reg),
@@ -219,11 +219,11 @@ if __name__== "__main__":
     with connect() as conn:
         for command in commands:
             query(conn,command)
-            conn.commit()
-
+        conn.commit() 
         try:
             insert_villes(conn)
-            #mj.get_all_meteojob(True)
+            conn.commit()
+            mj.get_all_meteojob(True)
         except Exception as e:
             print(traceback.format_exc())
         finally:

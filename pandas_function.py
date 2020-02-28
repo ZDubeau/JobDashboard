@@ -9,6 +9,7 @@ from pandas import isnull
 import numpy as np
 from collections import defaultdict
 import psycopg2 as p2
+import traceback
 
 
 #df = pd.DataFrame([annonce])  # Transformer Dict(Scraping) en DataFrame
@@ -22,7 +23,7 @@ def clean_salaire(df):
     int_salaire = re.findall('(\d\s*\d\s*\d*)', int_salaire)  # Trouver les chiffres
     
     for v in int_salaire:
-        list_salaire.append(v.replace('\xa0', ''))   # Supprimer certains lettres entre les chiffres
+        list_salaire.append(v.replace('\xa0', '').replace(" ",""))   # Supprimer certains lettres entre les chiffres
         list_salaire = [int(i) for i in list_salaire]
         
     if len(list_salaire) == 0:
@@ -153,7 +154,8 @@ def clean_intitule(df):
        'Type_contrat', 'Entreprise', 'corps', 'Lien', 'Date_publication_txt',
        'Salaire_min', 'Salaire_max', 'Exp_min', 'Exp_max', 'Diplome_min',
        'Diplome_max','Reference','Site_origine']).apply(lambda x: x.str.split(',').explode()).reset_index()
-    #print("in funct : ", df["intitule"]) 
+
+    print("in funct : ", df["intitule"]) 
 
     return df
 
@@ -164,15 +166,19 @@ def pandas_func(dict_):
     ''' Appeler toutes les fonctions '''
     
     df = pd.DataFrame([dict_])  # Transformer DataFrame en Dict
-    #print(df.columns)
+    print(df.columns)
     df = clean_salaire(df)
+    print(1)
     df = clean_exp(df)
+    print(2)
     df = clean_diplome(df)
+    print(3)
     df = drop_column(df)
+    print(4)
     try:
         df = clean_intitule(df)
     except Exception:
-        #print(df.columns,df["intitule"])
+        print(df.columns,df["intitule"])
         raise ValueError()
     
     return df.to_dict()
@@ -192,23 +198,31 @@ def insertion(annonces):
         cur = conn.cursor()
 
         clean = pandas_func(annonces)
-
+        
+        
         if clean["ville"].get(0):
+            print(clean["ville"])
             if clean["code_dep"].get(0):
+                print(clean["code_dep"])
                 sql = "SELECT code_insee, code_dep FROM ville WHERE nom = %s AND code_dep = %s"
-                cur.execute(sql,(clean["ville"][0].strip(),clean["code_dep"][0]))
+                params = (clean["ville"][0].strip(),clean["code_dep"][0])
+                cur.execute(sql,params)
+                    
+
             else:
+                print("no code dep")
                 sql = "SELECT code_insee, code_dep FROM ville WHERE nom = %s"
                 cur.execute(sql,(clean["ville"][0].strip(),))
 
             rinsee = cur.fetchall()
+
             if len(rinsee) == 1:
                 insee = rinsee[0][0]
                 code_dep = rinsee[0][1]
             else:
                 insee = None
                 code_dep = clean["code_dep"].get(0)
-
+        
         if code_dep:
             sql = "SELECT code_reg FROM departement WHERE code_dep = %s"
             cur.execute(sql,(code_dep,))
@@ -217,7 +231,8 @@ def insertion(annonces):
                 region = region[0][0]
             else:
                 region = None
-
+                code_dep = None
+        
         if clean["intitule"].get(0):
             intitules = []
             #print(clean["intitule"])
@@ -274,7 +289,7 @@ def insertion(annonces):
                 to_insert.append(elt)
 
         to_insert = tuple(to_insert)
-
+        print(to_insert)
         cur.execute(sql,to_insert)
         id_offre = cur.fetchall()
         if len(id_offre):

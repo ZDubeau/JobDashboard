@@ -25,6 +25,7 @@ def get_from_meteojob(url):
     contenu = meteo.html.find(".mj-offer-details",first=True)
     if contenu is None:
         print(meteo.html.text)
+        return None
     annonce = {}
 
     annonce["Titre"] = "NaN"
@@ -104,7 +105,7 @@ def get_from_meteojob(url):
     return annonce
 
 
-def get_all_meteojob():
+def get_all_meteojob(init=False):
     session = HTMLSession()
 
     headers = {
@@ -124,7 +125,7 @@ def get_all_meteojob():
     annonces = []
     cont = True
     ipage = 0
-
+    print("yo")
     while cont:
 
         ipage += 1
@@ -135,19 +136,21 @@ def get_all_meteojob():
         for elt in contenu:
             url3 = "https://www.meteojob.com" + elt.attrs["href"]
             curannonce = get_from_meteojob(url3)
-            #if curannonce["Date_publication_txt"] == "Hier":
-            if curannonce["Date_publication"] == "2020-02-19":
-                cont = False
-                break
-            if "sql" in curannonce["corps"] or "Sql" in curannonce["corps"] or "SQL" in curannonce["corps"]:
-            
-                curannonce["Reference"] = curannonce["Lien"].split("?")[0][-8:]
-                curannonce["Site_origine"] = "MeteoJob"
-                annonces.append(curannonce)
-                #cleanannonce = pf.pandas_func(curannonce)
-                pf.insertion(curannonce)
+            if curannonce:
+                if (curannonce["Date_publication_txt"] == "Hier" and not init) or (curannonce["Date_publication"] == "2020-02-19" and init):
+                    cont = False
+                    break
+
+                if "sql" in curannonce["corps"] or "Sql" in curannonce["corps"] or "SQL" in curannonce["corps"]:
+                    curannonce["Reference"] = curannonce["Lien"].split("?")[0][-8:]
+                    curannonce["Site_origine"] = "MeteoJob"
+                    annonces.append(curannonce)
+                    #cleanannonce = pf.pandas_func(curannonce)
+                    pf.insertion(curannonce)
+                    print(curannonce["Reference"])
 
             sleep(1)
+
 
     return annonces
 
