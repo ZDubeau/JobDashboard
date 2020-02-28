@@ -1,6 +1,8 @@
 import psycopg2
 import csv
 import pandas as pd
+import meteojob as mj
+import traceback
 
 def connect():
     """ Connect to the PostgreSQL database server """
@@ -21,6 +23,39 @@ def connect():
 
 
 commands = (
+    """
+    DROP TABLE offre_intitule CASCADE;
+    """
+    ,
+    """
+    DROP TABLE offre_secteur CASCADE;
+    """
+    ,
+    """
+    DROP TABLE intitule CASCADE;
+    """
+    ,
+    """
+    DROP TABLE secteur CASCADE;
+    """
+    ,
+    """
+    DROP TABLE ville CASCADE;
+    """
+    ,
+    """
+    DROP TABLE departement CASCADE;
+    """
+    ,
+    """
+    DROP TABLE region CASCADE;
+    """
+    ,
+    """
+    DROP TABLE offre CASCADE;
+    """
+    ,
+
     """
     CREATE TABLE IF NOT EXISTS offre_brute (
         id SERIAL PRIMARY KEY,
@@ -47,8 +82,8 @@ commands = (
     """
     CREATE TABLE IF NOT EXISTS intitule (
         id SERIAL PRIMARY KEY,
-        nom VARCHAR(30),
-        alias VARCHAR(30)
+        nom VARCHAR(50),
+        alias VARCHAR(50)
     )
     """
     ,
@@ -184,9 +219,12 @@ if __name__== "__main__":
     with connect() as conn:
         for command in commands:
             query(conn,command)
+            conn.commit()
+
         try:
-            pass#insert_villes(conn)
+            insert_villes(conn)
+            #mj.get_all_meteojob(True)
         except Exception as e:
-            pass
+            print(traceback.format_exc())
         finally:
             conn.commit()
