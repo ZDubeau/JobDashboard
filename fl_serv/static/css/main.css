@@ -45,14 +45,18 @@ div{
 }
 
 .hor, .vert{
-	padding: 5px;
+	padding: 2px;
 }
 
 .hor{
 	margin-left: 60px;
 	float: left;
-	height: 244px;
-	width: 700px;
+ 	height: 50%;	
+	width: 55%;
+}
+
+.hor img{
+	height: 100%;
 }
 
 #courbe{

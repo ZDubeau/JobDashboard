@@ -13,7 +13,7 @@ def get_homepage():
     hui = dg.dt.today()
     aujourdhui = ('0' if len(str(hui.day))==1 else "")+str(hui.day)+"-"+('0' if len(str(hui.month))==1 else "")+str(hui.month)+"-"+str(hui.year)
     nb_today, nb_total = dg.count_annonces()
-    volume_mj = dg.get_volume_chart(volume_unit)
+    volume_mj,lib_unite = dg.get_volume_chart(volume_unit)
     carte = dg.get_map_chart()
     camembert = dg.get_part_chart()
 
@@ -23,6 +23,7 @@ def get_homepage():
         nb_today=nb_today,
         nb_total=nb_total,
         volume_mj=volume_mj,
+        lib_unite=lib_unite,
         carte=carte,
         camembert=camembert)
 

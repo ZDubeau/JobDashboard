@@ -8,8 +8,10 @@ from pandas import DataFrame
 from pandas import isnull
 import numpy as np
 from collections import defaultdict
+import psycopg2 as p2
 
-df = pd.DataFrame([annonce])  # Transformer Dict(Scraping) en DataFrame
+
+#df = pd.DataFrame([annonce])  # Transformer Dict(Scraping) en DataFrame
 
 def clean_salaire(df):
     
@@ -37,7 +39,7 @@ def clean_salaire(df):
     
     return df
 
-clean_salaire(df)
+#clean_salaire(df)
 
 def clean_exp(df):
     
@@ -67,7 +69,7 @@ def clean_exp(df):
     
     return df
 
-clean_exp(df)
+#clean_exp(df)
 
 def clean_diplome(df):
     
@@ -107,7 +109,7 @@ def clean_diplome(df):
         
     return df
 
-clean_diplome(df)
+#clean_diplome(df)
 
 def drop_column(df):
     
@@ -119,7 +121,7 @@ def drop_column(df):
     
     return df
 
-drop_column(df)
+#drop_column(df)
 
 def clean_intitule(df):
     
@@ -129,35 +131,160 @@ def clean_intitule(df):
     
     ''' Supprimer tous les suffixe de la colonne intitule si ça existe '''
     
-    intitule = df['intitule'][0]
-    intitule = intitule.replace(" (H/F) ","")
-    intitule = intitule.replace(" (H/F)","")
-    intitule = intitule.replace("(H/F)","")
-    intitule = intitule.strip()
-    df.loc[:, ('intitule')] = intitule
+    #intitule = df['intitule'][0]
+    #intitule = intitule.replace(" (H/F) ","")
+    #intitule = intitule.replace(" (H/F)","")
+    #intitule = intitule.replace("(H/F)","")
+    #intitule = intitule.strip()
+    #df['intitule'][0] = intitule
     
+    def intitule_clean(intitule):
+    
+        intitule = intitule.replace(" (H/F) ","")
+        intitule = intitule.replace(" (H/F)","")
+        intitule = intitule.replace("(H/F)","")
+        return intitule.strip()
+
+    df['intitule'][0] = intitule_clean(df['intitule'][0])
+
     ''' Separer plusieurs intitules en plusieures lignes s'il y a > 1 '''
     
-    df = df.set_index(["Titre", "Date_publication", "ville",
-                       "code_dep", "Type_contrat", "Exp_min","Exp_max",
-                       "Diplome_min", "Diplome_max", "Entreprise", "Salaire_min",
-                       "Salaire_max", "corps", "Lien"]).apply(lambda x: x.str.split(',').explode()).reset_index()
-    
+    df = df.set_index(['Titre', 'Date_publication',  'ville', 'code_dep',
+       'Type_contrat', 'Entreprise', 'corps', 'Lien', 'Date_publication_txt',
+       'Salaire_min', 'Salaire_max', 'Exp_min', 'Exp_max', 'Diplome_min',
+       'Diplome_max','Reference','Site_origine']).apply(lambda x: x.str.split(',').explode()).reset_index()
+    #print("in funct : ", df["intitule"]) 
+
     return df
 
-clean_intitule(df)
+#clean_intitule(df)
 
 def pandas_func(dict_):
     
     ''' Appeler toutes les fonctions '''
     
     df = pd.DataFrame([dict_])  # Transformer DataFrame en Dict
+    #print(df.columns)
     df = clean_salaire(df)
     df = clean_exp(df)
     df = clean_diplome(df)
     df = drop_column(df)
-    df = clean_intitule(df)
+    try:
+        df = clean_intitule(df)
+    except Exception:
+        #print(df.columns,df["intitule"])
+        raise ValueError()
     
     return df.to_dict()
 
-pandas_func()
+#pandas_func()
+
+
+def insertion(annonces):
+    con_params = """
+                  host=localhost
+                  dbname=job_dashboard
+                  user=job
+                  password=dashboard
+                  port=5432
+                  """
+    with p2.connect(con_params) as conn:
+        cur = conn.cursor()
+
+        clean = pandas_func(annonces)
+
+        if clean["ville"].get(0):
+            if clean["code_dep"].get(0):
+                sql = "SELECT code_insee, code_dep FROM ville WHERE nom = %s AND code_dep = %s"
+                cur.execute(sql,(clean["ville"][0].strip(),clean["code_dep"][0]))
+            else:
+                sql = "SELECT code_insee, code_dep FROM ville WHERE nom = %s"
+                cur.execute(sql,(clean["ville"][0].strip(),))
+
+            rinsee = cur.fetchall()
+            if len(rinsee) == 1:
+                insee = rinsee[0][0]
+                code_dep = rinsee[0][1]
+            else:
+                insee = None
+                code_dep = clean["code_dep"].get(0)
+
+        if code_dep:
+            sql = "SELECT code_reg FROM departement WHERE code_dep = %s"
+            cur.execute(sql,(code_dep,))
+            region = cur.fetchall()
+            if len(region) == 1:
+                region = region[0][0]
+            else:
+                region = None
+
+        if clean["intitule"].get(0):
+            intitules = []
+            #print(clean["intitule"])
+            for k,tit in clean["intitule"].items():
+                tit = tit.strip()
+                sql = "SELECT id FROM intitule WHERE alias = %s"
+                cur.execute(sql,(tit,))
+                exists = cur.fetchall()
+                if len(exists)>0:
+                    intitules.append(exists[0][0])
+                else:
+                    sql = """
+                            INSERT INTO intitule (alias) 
+                            VALUES (%s)
+                            RETURNING id;
+                        """
+                    cur.execute(sql,(tit,))
+                    exists = cur.fetchall()
+                    if len(exists)>0:
+                        intitules.append(exists[0][0])
+
+        sql = """
+                INSERT INTO offre (titre, date_publication, type_contrat, exp_min, exp_max,
+                diplome_min, diplome_max, entreprise, salaire_min, salaire_max, corps, lien_site,
+                ref, site_origine, ville, departement, region)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                RETURNING id;
+            """
+        to_check = [
+            clean["Titre"].get(0),
+            clean["Date_publication"].get(0),
+            clean["Type_contrat"].get(0),
+            clean["Exp_min"].get(0),
+            clean["Exp_max"].get(0),
+            clean["Diplome_min"].get(0),
+            clean["Diplome_max"].get(0),
+            clean["Entreprise"].get(0),
+            clean["Salaire_min"].get(0),
+            clean["Salaire_max"].get(0),
+            clean["corps"].get(0),
+            clean["Lien"].get(0),
+            clean["Reference"].get(0),
+            clean["Site_origine"].get(0),
+            insee,
+            code_dep,
+            region
+        ]
+
+        to_insert = []
+        for elt in to_check:
+            if elt == "NaN":
+                to_insert.append(None)
+            else:
+                to_insert.append(elt)
+
+        to_insert = tuple(to_insert)
+
+        cur.execute(sql,to_insert)
+        id_offre = cur.fetchall()
+        if len(id_offre):
+            id_offre = id_offre[0][0]
+        else:
+            id_offre = None
+
+        if id_offre and len(intitules):
+            sql = "INSERT INTO offre_intitule (id_offre, id_intitule) VALUES (%s, %s)"
+            for intitule in intitules:
+                cur.execute(sql,(id_offre,intitule))
+
+        conn.commit()

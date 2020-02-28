@@ -3,6 +3,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 from datetime import datetime as dt
+from flask import url_for
 
 
 def count_annonces():
@@ -16,7 +17,7 @@ def count_annonces():
             """
         sql_day = """
                     SELECT COUNT(*) FROM offre
-                    WHERE date_publication BETWEEN now() AND now() - interval '1 day';
+                    WHERE date_publication BETWEEN now()  - interval '1 day' AND now();
                 """
         cur.execute(sql)
         total = cur.fetchone()[0]
@@ -74,18 +75,24 @@ def get_volume_chart(unite="j"):
 
             vals = []
             if len(resultat) > 0:
+                nbo = []
                 for ligne in resultat:
                     vals.append([ligne[1],str(ligne[0].day)+"-"+str(ligne[0].month)+"-"+str(ligne[0].year)])
+                    nbo.append(ligne[1])
+                
+                df = pd.DataFrame(vals,columns=["nb",lib_unite])
 
-                df = pd.DataFrame(vals,columns=["nb","jour"])
-
-                ax = sns.pointplot(df["jour"],df["nb"], color="blue")
-                ax.set(ylim=plt.ylim(bottom=0))
+                ax = sns.pointplot(df[lib_unite],df["nb"], color="blue")
+                ax.set(ylim=plt.ylim(bottom=0,top=max(nbo)+5))
 
                 titre = f"volume-{lib_unite}-"+dt.today().isoformat().split("T")[0]
-                plt.savefig("static/"+titre)
+                try:
+                    plt.savefig("fl_serv/static/image/"+titre+".png")
+                except Exception:
+                    pass
 
-                balise = f'<img src="{titre}" alt="Volume d\'annonces par {lib_unite}" />'
+                #loc_image = url_for('static', filename='image/'+titre)
+                #balise = f'<img src="{loc_image}" alt="Volume d\'annonces par {lib_unite}" />'
         
     except p2.OperationalError as e:
         pass
@@ -96,4 +103,4 @@ def get_volume_chart(unite="j"):
         if conn is not None:
             conn.close()
     
-    return balise
+    return titre, lib_unite

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<title>Job Dashbard</title>
-		<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
 	</head>
 	<body>
 		<!--<div class="onglet actif onglet_gauche">État du marché</div>
@@ -17,7 +17,7 @@
 					{{ carte|safe }}
 				</div>
 				<div id="courbe" class="schema hor">
-					{{ volume_mj|safe }}
+					<img src="{{ url_for('static', filename='image/'+volume_mj+'.png') }}" alt="Volume d'annonces par {{ lib_unite }}" />
 				</div>
 				<div id="camembert" class="schema hor">
 					{{ camembert|safe }}

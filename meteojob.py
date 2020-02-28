@@ -1,6 +1,7 @@
 from requests_html import HTMLSession
 from time import sleep
 import json
+import pandas_function as pf
 
 
 def get_from_meteojob(url):
@@ -41,19 +42,22 @@ def get_from_meteojob(url):
     
     annonce["Titre"] = contenu.find("h1",first=True).text
     annonce["Date_publication_txt"] = contenu.find(".publication-date",first=True).text
+    annonce["Date_publication"] = annonce["Date_publication_txt"]
     cont_json = meteo.html.find(".mj-column-content script")
+    
     for j in cont_json:
         if j.attrs["type"] == "application/ld+json":
             cont = j.text
             if cont is not None and cont != "":
                 try:
-                    cont=json.loads(json)
+                    cont=json.loads(cont)
                     annonce["Date_publication"] = cont["datePosted"].split("T")[0]
                 except Exception as e:
                     #print(cont)
-                    annonce["Date_publication"] = annonce["Date_publication_txt"]
-            else:
-                annonce["Date_publication"] = annonce["Date_publication_txt"]
+                    #annonce["Date_publication"] = annonce["Date_publication_txt"]
+                    pass
+        else:
+            print(j.attrs["type"])
 
     items = contenu.find(".matching-criterion-wrapper")
     criteres = []
@@ -86,7 +90,12 @@ def get_from_meteojob(url):
             annonce["Entreprise"] = sect.find("h3 span",first=True).text
         elif not sect.attrs.get("class"):
             if sect.find("h3") and sect.find("h3",first=True).text == "Salaire et avantages":
-                annonce["Salaire"] = sect.find("div",first=True).text
+                if sect.find("div",first=True):
+                    annonce["Salaire"] = sect.find("div",first=True).text
+                elif sect.find("p",first=True):
+                    annonce["Salaire"] = sect.find("p",first=True).text
+                else:
+                    print(sect.html)
 
     annonce["corps"] = corps
 
@@ -126,10 +135,17 @@ def get_all_meteojob():
         for elt in contenu:
             url3 = "https://www.meteojob.com" + elt.attrs["href"]
             curannonce = get_from_meteojob(url3)
-            if curannonce["Date_publication_txt"] == "Hier":
+            #if curannonce["Date_publication_txt"] == "Hier":
+            if curannonce["Date_publication"] == "2020-02-19":
                 cont = False
                 break
-            annonces.append(curannonce)
+            if "sql" in curannonce["corps"] or "Sql" in curannonce["corps"] or "SQL" in curannonce["corps"]:
+            
+                curannonce["Reference"] = curannonce["Lien"].split("?")[0][-8:]
+                curannonce["Site_origine"] = "MeteoJob"
+                annonces.append(curannonce)
+                #cleanannonce = pf.pandas_func(curannonce)
+                pf.insertion(curannonce)
 
             sleep(1)
 
