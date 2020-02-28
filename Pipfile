@@ -12,6 +12,7 @@ psycopg2-binary = "*"
 pytest = "*"
 plotly = "*"
 seaborn = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"
