@@ -1,4 +1,8 @@
 import psycopg2
+import csv
+import pandas as pd
+import meteojob as mj
+import traceback
 
 def connect():
     """ Connect to the PostgreSQL database server """
@@ -21,10 +25,43 @@ def connect():
 
 commands = (
     """
+    DROP TABLE offre_intitule CASCADE;
+    """
+    ,
+    """
+    DROP TABLE offre_secteur CASCADE;
+    """
+    ,
+    """
+    DROP TABLE intitule CASCADE;
+    """
+    ,
+    """
+    DROP TABLE secteur CASCADE;
+    """
+    ,
+    """
+    DROP TABLE ville CASCADE;
+    """
+    ,
+    """
+    DROP TABLE departement CASCADE;
+    """
+    ,
+    """
+    DROP TABLE region CASCADE;
+    """
+    ,
+    """
+    DROP TABLE offre CASCADE;
+    """
+    ,
+
+    """
     CREATE TABLE IF NOT EXISTS offre_brute (
         id SERIAL PRIMARY KEY,
         ref VARCHAR(20),
-        titre VARCHAR(50),
+        titre VARCHAR(100),
         entreprise VARCHAR(30),
         ville VARCHAR(40),
         departement VARCHAR(30),
@@ -47,7 +84,7 @@ commands = (
     CREATE TABLE IF NOT EXISTS intitule (
         id SERIAL PRIMARY KEY,
         nom VARCHAR(30),
-        alias VARCHAR(30)
+        alias VARCHAR(75)
     )
     """
     ,
@@ -76,8 +113,10 @@ commands = (
     """
     CREATE TABLE IF NOT EXISTS ville (
         code_insee VARCHAR(5) PRIMARY KEY,
-        nom VARCHAR(40),
-        code_dep VARCHAR(3) REFERENCES departement (code_dep)
+        nom VARCHAR(50),
+        code_dep VARCHAR(3) REFERENCES departement (code_dep),
+        latitude float,
+        longitude float
     )
     """
     ,
@@ -85,8 +124,8 @@ commands = (
     CREATE TABLE IF NOT EXISTS offre (
         id SERIAL PRIMARY KEY,
         ref VARCHAR(20),
-        titre VARCHAR(50),
-        entreprise VARCHAR(30),
+        titre VARCHAR(100),
+        entreprise VARCHAR(50),
         ville VARCHAR(5) REFERENCES ville (code_insee),
         departement VARCHAR(3) REFERENCES departement (code_dep),
         region VARCHAR(3) REFERENCES region (code_reg),
@@ -107,6 +146,14 @@ commands = (
     """
     ,
     """
+    CREATE TABLE IF NOT EXISTS offre_intitule (
+        id_offre integer REFERENCES offre(id),
+        id_intitule integer REFERENCES intitule(id),
+        CONSTRAINT PK_o_i PRIMARY KEY(id_offre,id_intitule)
+    )
+    """
+    ,
+    """
     CREATE TABLE IF NOT EXISTS offre_secteur (
         id_secteur INTEGER REFERENCES secteur (id),
         id_offre INTEGER REFERENCES offre (id),
@@ -121,10 +168,64 @@ def query(conn,requete):
     cur = conn.cursor()
     cur.execute(requete)
 
+def query_params(conn,requete,params):
+    cur = conn.cursor()
+    cur.execute(requete,params)
+
+
+def insert_villes(conn):
+    with open("circos.csv","r") as floc:
+        locreader = csv.DictReader(floc,delimiter=";")
+        df = pd.DataFrame(locreader)
+
+        dvf = df[['code_région', 'nom_région','numéro_département','nom_département',"code_insee","nom_commune","latitude","longitude"]]
+        dvf = dvf.replace({"latitude":{"":"0.0"},"longitude":{"":"0.0"}})
+        dvf = dvf.replace({"latitude":{"-":"0.0"},"longitude":{"-":"0.0"}})
+
+        dvf = dvf.replace({"latitude":{r"^(-?\d{1,2}),(\d+)$":r"\1.\2"},"longitude":{r"^(-?\d{1,2}),(\d+)$":r"\1.\2"}},regex=True)
+
+        dvf = dvf.astype({"latitude":"float32","longitude":"float32"},errors="ignore")        
+        
+        ddf = dvf.groupby(["numéro_département","nom_département","code_région"])
+        departements = ddf.groups
+        drf = dvf.groupby(["code_région","nom_région"])
+        regions = drf.groups
+
+        sql_reg = "INSERT INTO region (code_reg,nom) VALUES (%s,%s)"
+        sql_dep = "INSERT INTO departement (code_dep, nom, code_reg) VALUES (%s,%s,%s)"
+        sql_vil = "INSERT INTO ville (code_insee, nom, code_dep,latitude,longitude) VALUES (%s,%s,%s,%s,%s)"
+
+        for reg in regions:
+            query_params(conn,sql_reg,(reg[0],reg[1]))
+
+        for dep in departements:
+            query_params(conn,sql_dep,(dep[0],dep[1],dep[2]))
+
+        communes = dvf.groupby(["code_insee","nom_commune","numéro_département","latitude","longitude"])
+        villes = communes.groups
+
+        insee = '0'
+        for vil in villes:
+            if insee != vil[0]:
+                try:
+                    if vil[0] == '97502' and not vil[1] == "BANDRABOUA" or not vil[0] == '97502':
+                        query_params(conn,sql_vil,(vil[0],vil[1],vil[2],vil[3],vil[4]))
+                except Exception as e:
+                    print(e,vil[1])
+                insee = vil[0]        
+
+
 
 if __name__== "__main__":
     with connect() as conn:
         for command in commands:
             query(conn,command)
-
+        conn.commit() 
+        try:
+            insert_villes(conn)
+            conn.commit()
+            mj.get_all_meteojob(True)
+        except Exception as e:
+            print(traceback.format_exc())
+        finally:
             conn.commit()

@@ -1,0 +1,106 @@
+import psycopg2 as p2
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+from datetime import datetime as dt
+from flask import url_for
+
+
+def count_annonces():
+    jour, total = 0 , 0
+    try:
+        conn = p2.connect('host=localhost dbname=job_dashboard user=job password=dashboard port=5432')
+        cur = conn.cursor()
+
+        sql = """
+                SELECT COUNT(*) FROM offre;
+            """
+        sql_day = """
+                    SELECT COUNT(*) FROM offre
+                    WHERE date_publication BETWEEN now()  - interval '1 day' AND now();
+                """
+        cur.execute(sql)
+        total = cur.fetchone()[0]
+
+        cur.execute(sql_day)
+        jour = cur.fetchone()[0]
+
+    except p2.OperationalError as e:
+        pass
+
+    finally:
+        if cur is not None:
+            cur.close()
+        if conn is not None:
+            conn.close()
+
+    return (jour,total)
+
+def get_map_chart(zoom="r"):
+    return '<p>Diagramme indisponible</p>'
+
+def get_part_chart():
+    return '<p>Diagramme indisponible</p>'
+
+
+def get_volume_chart(unite="j"):
+    
+    balise = "<p>Diagramme indisponible</p>"
+    sql = ""
+    lib_unite = ""
+    
+    try:
+        conn = p2.connect('host=localhost dbname=job_dashboard user=job password=dashboard port=5432')
+        cur = conn.cursor()
+        
+        
+        if unite == "j":
+            sql = """SELECT date_trunc('day', Date_publication) as jour, COUNT(*) as nb
+                    FROM offre
+                    GROUP BY jour
+                    ORDER BY jour;
+                """
+            lib_unite = "jour"
+        elif unite == "m":
+            sql = """SELECT date_trunc('month', Date_publication) as jour, COUNT(*) as nb
+                    FROM offre
+                    GROUP BY jour
+                    ORDER BY jour;
+                """
+            lib_unite = "mois"
+            
+        if not sql == "" :
+            cur.execute(sql)
+            resultat = cur.fetchall()
+
+            vals = []
+            if len(resultat) > 0:
+                nbo = []
+                for ligne in resultat:
+                    vals.append([ligne[1],str(ligne[0].day)+"-"+str(ligne[0].month)+"-"+str(ligne[0].year)])
+                    nbo.append(ligne[1])
+                
+                df = pd.DataFrame(vals,columns=["nb",lib_unite])
+
+                ax = sns.pointplot(df[lib_unite],df["nb"], color="blue")
+                ax.set(ylim=plt.ylim(bottom=0,top=max(nbo)+5))
+
+                titre = f"volume-{lib_unite}-"+dt.today().isoformat().split("T")[0]
+                try:
+                    plt.savefig("fl_serv/static/image/"+titre+".png")
+                except Exception:
+                    pass
+
+                #loc_image = url_for('static', filename='image/'+titre)
+                #balise = f'<img src="{loc_image}" alt="Volume d\'annonces par {lib_unite}" />'
+        
+    except p2.OperationalError as e:
+        pass
+    
+    finally:
+        if cur is not None:
+            cur.close()
+        if conn is not None:
+            conn.close()
+    
+    return titre, lib_unite
