@@ -82,13 +82,8 @@ commands = (
     """
     CREATE TABLE IF NOT EXISTS intitule (
         id SERIAL PRIMARY KEY,
-<<<<<<< HEAD
-        nom VARCHAR(50),
-        alias VARCHAR(50)
-=======
         nom VARCHAR(30),
         alias VARCHAR(75)
->>>>>>> initialisation de la base
     )
     """
     ,
@@ -224,19 +219,11 @@ if __name__== "__main__":
     with connect() as conn:
         for command in commands:
             query(conn,command)
-<<<<<<< HEAD
-            conn.commit()
-
-        try:
-            insert_villes(conn)
-            #mj.get_all_meteojob(True)
-=======
         conn.commit() 
         try:
             insert_villes(conn)
             conn.commit()
             mj.get_all_meteojob(True)
->>>>>>> initialisation de la base
         except Exception as e:
             print(traceback.format_exc())
         finally:
