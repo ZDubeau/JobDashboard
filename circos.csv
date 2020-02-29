@@ -28497,10 +28497,10 @@ Est;42;Alsace;Strasbourg;68;Haut-Rhin;Colmar;7;Ungersheim;68190;68343;47.883333;
 Est;42;Alsace;Strasbourg;68;Haut-Rhin;Colmar;7;Wattwiller;68700;68359;47.85;7.166667;1.62
 Est;42;Alsace;Strasbourg;68;Haut-Rhin;Colmar;7;Wittelsheim;68310;68375;47.816667;7.25;0.2
 Est;42;Alsace;Strasbourg;68;Haut-Rhin;Colmar;7;Wuenheim;68500;68381;47.883333;7.2;0.59
-Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;1;Lyon;69002 69008 69007 69005 69009;69123;;;
-Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;2;Lyon;69001 69002 69004 69009;69123;;;
-Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;3;Lyon;69003 69007 69008;69123;;;
-Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;4;Lyon;69003 69006 69008;69123;;;
+Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;1;Lyon;69002 69008 69007 69005 69009;69123;45.7739471;4.8069094;
+Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;2;Lyon;69001 69002 69004 69009;69123;45.7712918;4.8280831;
+Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;3;Lyon;69003 69007 69008;69123;45.7304251;4.8399378;
+Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;4;Lyon;69003 69006 69008;69123;45.7751072;4.8501975;
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;5;Albigny-sur-Saône;69250;69003;45.816667;4.45;2.5
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;5;Cailloux-sur-Fontaines;69270;69033;45.85;4.866667;1.62
 Sud-Est;82;Rhône-Alpes;Lyon;69;Rhône;Lyon;5;Caluire-et-Cuire;69300;69034;45.8;4.85;1.5
@@ -30892,27 +30892,27 @@ Sud-Est;82;Rhône-Alpes;Lyon;74;Haute-Savoie;Annecy;5;Ville-en-Sallaz;74250;7430
 Sud-Est;82;Rhône-Alpes;Lyon;74;Haute-Savoie;Annecy;5;Vinzier;74500;74308;46.35;6.633333;1.99
 Sud-Est;82;Rhône-Alpes;Lyon;74;Haute-Savoie;Annecy;5;Viuz-en-Sallaz;74250;74311;46.15;6.416667;0.61
 Sud-Est;82;Rhône-Alpes;Lyon;74;Haute-Savoie;Annecy;5;Yvoire;74140;74315;46.366667;6.333333;2.1
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;1;Paris;75001 75002 75003 75004;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;2;Paris;75005 75006;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;3;Paris;75006 75007;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;4;Paris;75008 75009;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;5;Paris;75010;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;6;Paris;75011 75020;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;7;Paris;75011 75012;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;8;Paris;75012;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;9;Paris;75013;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;10;Paris;75013 75014;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;11;Paris;75014;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;12;Paris;75015;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;13;Paris;75015;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;14;Paris;75016;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;15;Paris;75016;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;16;Paris;75017;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;17;Paris;75017 75018;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;18;Paris;75018;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;19;Paris;75018 75019;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;20;Paris;75019;75056;;;
-Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;21;Paris;75020;75056;;;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;1;Paris;75001 75002 75003 75004;75056;48.8682792225;2.34280254689;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;2;Paris;75005 75006;75056;48.8444431505;2.35071460958;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;3;Paris;75006 75007;75056;48.8561744288;2.31218769148;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;4;Paris;75008 75009;75056;48.8771635173;2.33745754348;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;5;Paris;75010;75056;48.8761300365;2.36072848785;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;6;Paris;75011 75020;75056;48.8491303586;2.33289799905;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;7;Paris;75011 75012;75056;48.8491303586;2.33289799905;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;8;Paris;75012;75056;48.8349743815;2.42132490078;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;9;Paris;75013;75056;48.8283880317;2.36227244042;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;10;Paris;75013 75014;75056;48.8283880317;2.36227244042;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;11;Paris;75014;75056;48.8292445005;2.3265420442;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;12;Paris;75015;75056;48.8400853759;2.29282582242;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;13;Paris;75015;75056;48.8400853759;2.29282582242;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;14;Paris;75016;75056;48.8603921054;2.26197078836;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;15;Paris;75016;75056;48.8603921054;2.26197078836;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;16;Paris;75017;75056;48.887326522;2.30677699057;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;17;Paris;75017 75018;75056;48.887326522;2.30677699057;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;18;Paris;75018;75056;48.8727208374;2.3125540224;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;19;Paris;75018 75019;75056;48.892569268;2.34816051956;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;20;Paris;75019;75056;48.8870759966;2.38482096015;
+Île-de-France;11;Île-de-France;Paris;75;Paris;Paris;21;Paris;75020;75056;48.8634605789;2.40118812928;
 Nord-Ouest;23;Haute-Normandie;Rouen;76;Seine-Maritime;Rouen;1;Rouen;76000;76540;49.433333;1.083333;1.82
 Nord-Ouest;23;Haute-Normandie;Rouen;76;Seine-Maritime;Rouen;2;Amfreville-la-Mi-Voie;76920;76005;49.4;1.116667;2.07
 Nord-Ouest;23;Haute-Normandie;Rouen;76;Seine-Maritime;Rouen;2;Auzouville-sur-Ry;76116;76046;49.433333;1.316667;1.82
@@ -36392,10 +36392,10 @@ Est;43;Franche-Comté;Besançon;90;Territoire de Belfort;Belfort;2;Vétrigne;903
 Île-de-France;11;Île-de-France;Paris;92;Hauts-de-Seine;Nanterre;1;Colombes;92700;92025;48.916667;2.25;1.8
 Île-de-France;11;Île-de-France;Paris;92;Hauts-de-Seine;Nanterre;1;Gennevilliers;92230;92036;48.933333;2.3;2.19
 Île-de-France;11;Île-de-France;Paris;92;Hauts-de-Seine;Nanterre;1;Villeneuve-la-Garenne;92390;92078;48.933333;2.333333;-1
-Île-de-France;11;Île-de-France;Paris;92;Hauts-de-Seine;Nanterre;2;Asnières-sur-Seine;92600;92004;;;
+Île-de-France;11;Île-de-France;Paris;92;Hauts-de-Seine;Nanterre;2;Asnières-sur-Seine;92600;92004;48.914155;2.285369;
 Île-de-France;11;Île-de-France;Paris;92;Hauts-de-Seine;Nanterre;2;Colombes;92700;92025;48.916667;2.25;1.8
 Île-de-France;11;Île-de-France;Paris;92;Hauts-de-Seine;Nanterre;3;Bois-Colombes;92270;92009;48.916667;2.266667;1.8
-Île-de-France;11;Île-de-France;Paris;92;Hauts-de-Seine;Nanterre;3;Courbevoie;92400;92026;;;
+Île-de-France;11;Île-de-France;Paris;92;Hauts-de-Seine;Nanterre;3;Courbevoie;92400;92026;48.900552;2.25929;
 Île-de-France;11;Île-de-France;Paris;92;Hauts-de-Seine;Nanterre;3;La Garenne-Colombes;92250;92035;48.9;2.25;1.41
 Île-de-France;11;Île-de-France;Paris;92;Hauts-de-Seine;Nanterre;4;Nanterre;92000;92050;48.9;2.2;1.49
 Île-de-France;11;Île-de-France;Paris;92;Hauts-de-Seine;Nanterre;4;Suresnes;92150;92073;48.866667;2.233333;0.63

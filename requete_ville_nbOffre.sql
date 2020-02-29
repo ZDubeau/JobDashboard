@@ -5,4 +5,5 @@ ville.latitude as lat,
 ville.longitude as lng 
 FROM offre 
 INNER JOIN ville ON ville.code_insee = offre.ville 
-GROUP BY nom_ville, date_pub, lat, lng;
+GROUP BY nom_ville, date_pub, lat, lng
+ORDER BY nb_offre DESC;
