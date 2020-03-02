@@ -61,6 +61,7 @@ def get_volume_chart(unite="j"):
                     ORDER BY jour;
                 """
             lib_unite = "jour"
+
         elif unite == "m":
             sql = """SELECT date_trunc('month', Date_publication) as jour, COUNT(*) as nb
                     FROM offre
@@ -86,6 +87,7 @@ def get_volume_chart(unite="j"):
                 ax.set(ylim=plt.ylim(bottom=0,top=max(nbo)+5))
 
                 titre = f"volume-{lib_unite}-"+dt.today().isoformat().split("T")[0]
+         
                 try:
                     plt.savefig("fl_serv/static/image/"+titre+".png")
                 except Exception:
