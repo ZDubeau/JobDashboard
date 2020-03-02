@@ -15,7 +15,8 @@ def get_homepage():
     aujourdhui = ('0' if len(str(hui.day))==1 else "")+str(hui.day)+"-"+('0' if len(str(hui.month))==1 else "")+str(hui.month)+"-"+str(hui.year)
     nb_today, nb_total = dg.count_annonces()
     volume_mj,lib_unite = dg.get_volume_chart(volume_unit)
-    carte = pg.get_infos()
+    carte_reg = pg.get_infos(profondeur="7")
+    carte_dep = pg.get_infos(unite="d",profondeur="7")
     camembert = dg.get_part_chart()
 
     return render_template(
@@ -25,6 +26,7 @@ def get_homepage():
         nb_total=nb_total,
         volume_mj=volume_mj,
         lib_unite=lib_unite,
-        carte=carte,
+        carte_reg=carte_reg,
+        carte_dep = carte_dep,
         camembert=camembert)
 

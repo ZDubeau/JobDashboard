@@ -11,7 +11,7 @@ def region_offre(regions,profondeur):
     from pygal.maps.fr import aggregate_regions
     from pygal.style import Style
     
-    custom_style=Style(background='#F0F8FF',colors=('#E853A0', '#E8537A', '#E95355', '#E87653', '#E89B53'))
+    custom_style=Style(background='#eeeeee',colors=('#3B7A57', '#316659', '#27524C', '#1D3E3F', '#132A22','091615'))
     fr_chart = pygal.maps.fr.Regions(style=custom_style, human_readable=True)
     #fr_chart.title = "le nombre d'offre par regions"
     regions_dict = dict(zip(regions.reg_code,regions.nb_offre))
@@ -29,7 +29,7 @@ def dep_offre(departements,profondeur):
     from pygal.maps.fr import aggregate_regions
     from pygal.style import Style
     
-    custom_style=Style(background='#F0F8FF',colors=('#E853A0', '#E8537A', '#E95355', '#E87653', '#E89B53'))
+    custom_style=Style(background='#eeeeee',colors=('#E82350', '#E8234A', '#E92335', '#E83623', '#E84B33'))
     fr_chart = pygal.maps.fr.Departments(style=custom_style, human_readable=True)
     #fr_chart.title = "le nombre d'offre par départements"
     departement_dict = dict(zip(departements.dep_code,departements.nb_offre))
@@ -53,9 +53,9 @@ def pie_chart(df,profondeur,unite):
         #pie_chart.title = "le pourcentage d'offre par départements"
     total = 0
     for data in df.values:
-        total += data[2]
+        total += data[1]
     for data in df.values:
-        percent = round(data[2]/total*100,1)
+        percent = round(data[1]/total*100,1)
         pie_chart.add(data[0],percent)
     if unite == "r":
         pie_chart.render_to_file("fl_serv/static/image/pie_chart_regions_"+profondeur+".svg")    
@@ -125,7 +125,7 @@ def get_infos(unite="r",profondeur="30"):
                     #df.pivot('nom_region', 'nom_ville', 'nb_offre', 'date_pub', 'lat', 'lng')
                     nom_carte = dep_offre(df,profondeur)
                 
-                pie_chart(df,profondeur,unite)
+                #pie_chart(df,profondeur,unite)
                 #return df
 
     except psycopg2.OperationalError as error:

@@ -12,19 +12,33 @@
 
 			<h1>État du marché au {{ aujourdhui}}</h1>
 			<p>{{ nb_today }} nouvelles annonces, {{ nb_total }} annonces dans la base</p>
-			<div>
-				<div id="carte" class="schema vert">
+			<div id="content">
+				<div class="schema vert carte">
+					<h4>Carte par région</h4>
 					<figure>
-	                      			<embed type="image/svg+xml" src="{{ url_for('static', filename='image/'+carte) }}" />
+	                      			<embed type="image/svg+xml" src="{{ url_for('static', filename='image/'+carte_reg) }}" />
 		   	                </figure>
 
 				</div>
-				<div id="courbe" class="schema hor">
+                                <div class="schema hor carte">
+					<h4>Carte par département</h4>
+                                        <figure>
+                                                <embed type="image/svg+xml" src="{{ url_for('static', filename='image/'+carte_dep) }}" />
+                                        </figure>
+
+                                </div>
+
+				<div id="courbe" class="schema vert">
+					<h4>Volume d'annonce par {{lib_unite}}</h4>
 					<img src="{{ url_for('static', filename='image/'+volume_mj+'.png') }}" alt="Volume d'annonces par {{ lib_unite }}" />
 				</div>
-				<div id="camembert" class="schema hor">
-					{{ camembert|safe }}
-				</div>
+				<div id="courbe" class="schema hor">
+                                        <h4>Volume d'annonce par intitulé de poste</h4>
+					<figure>
+                                                <embed type="image/svg+xml" src="{{ url_for('static', filename='image/'+camembert) }}" />
+                                        </figure>
+                                </div>
+
 			</div>
 		</div>
 	</body>

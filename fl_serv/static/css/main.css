@@ -3,7 +3,7 @@
 	font-family: Verdana, Arial, "sans serif";
 }
 
-div{
+#page{
 	border: solid 1px black;
 }
 
@@ -24,49 +24,51 @@ div{
 #page{
 	clear: both;
 	border-radius: 16px;
-	height: 625px;
+	height: 1200px;
 	-webkit-border-radius: 16px;
 }
 
-#page div{
-	background-color: white;
-}
 
 #page h1, #page p{
 	padding: 0 0 0 16px;
 }
 
-#carte{
+.schema{
 	float: left;
-	margin-left: 7px;
-	height: 500px;
-	width: 630px;
-	background-color: yellow;
+	margin-left: 0px;
+	height: 527px;
+	width: 662px;
 }
-#carte figure{
-	margin: 0;
+
+.carte figure{
+	margin: 0px;
 	width: 100%;
 }
 .hor, .vert{
-	padding: 2px;
+	padding: 0px;
 }
 
 .hor{
-	margin-left: 10px;
+	margin-left: 0px;
 	float: left;
- 	height: 50%;	
-	width: 50%;
+ 	height: 527px;	
+	width: 661px;
 }
 
 .hor img{
-	height: 100%;
+	width: 100%;
 }
 
 
-#courbe{
-	background-color: lightblue;
+#courbe.vert{
+	clear:both;
 }
 
-.schema p{
+.schema h4{
 	margin: auto;
+	padding: 5px 0 3px 4px;
+}
+
+#content{
+	border-top:solid 1px black;
 }

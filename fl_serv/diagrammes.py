@@ -4,6 +4,12 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from datetime import datetime as dt
 from flask import url_for
+import pygal
+import numpy as np
+from IPython.display import HTML, SVG
+from pygal.maps.fr import aggregate_regions
+from . import pygalRegDep as pg
+
 
 
 def count_annonces():
@@ -40,7 +46,37 @@ def get_map_chart(zoom="r"):
     return '<p>Diagramme indisponible</p>'
 
 def get_part_chart():
-    return '<p>Diagramme indisponible</p>'
+    camembert = ""
+    with p2.connect('host=localhost dbname=job_dashboard user=job password=dashboard port=5432') as conn:
+        cur = conn.cursor()
+
+        sql = """
+            SELECT i.nom as nom_intitule,
+            COUNT(*) as nb_offre
+            FROM offre o
+            INNER JOIN offre_intitule oi ON oi.id_offre = o.id
+            INNER JOIN intitule i ON oi.id_intitule = i.id
+            WHERE o.Date_publication > current_timestamp - interval '7 day'
+            GROUP BY nom_intitule;
+        """
+
+        if not sql == "" :
+            cur.execute(sql)
+            resultat = cur.fetchall()
+
+            values = []
+            if len(resultat) > 0:
+                nbr = []
+                for ligne in resultat:
+                    values.append(ligne)
+                    nbr.append(ligne[1])
+
+                df = pd.DataFrame(values, columns=['nom_intitule', 'nb_offre'])
+
+                camembert = pg.pie_chart(df,"7","r")
+                
+
+    return camembert
 
 
 def get_volume_chart(unite="j"):
@@ -85,6 +121,7 @@ def get_volume_chart(unite="j"):
 
                 ax = sns.pointplot(df[lib_unite],df["nb"], color="blue")
                 ax.set(ylim=plt.ylim(bottom=0,top=max(nbo)+5))
+                plt.xticks(rotation=25)
 
                 titre = f"volume-{lib_unite}-"+dt.today().isoformat().split("T")[0]
          
