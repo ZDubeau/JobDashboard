@@ -17,7 +17,13 @@ requests = "*"
 =======
 pandas = "*"
 flask = "*"
+<<<<<<< HEAD
 >>>>>>> 9eeec5df5ef669154c99eee8736d6b91d6e16405
+=======
+pygal = "*"
+ipython = "*"
+pygal-maps-fr = "*"
+>>>>>>> 6589481c218622b6d391e8ce64e3f405e42d309a
 
 [requires]
 python_version = "3.7"

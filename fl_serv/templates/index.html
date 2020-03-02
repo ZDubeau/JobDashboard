@@ -14,7 +14,10 @@
 			<p>{{ nb_today }} nouvelles annonces, {{ nb_total }} annonces dans la base</p>
 			<div>
 				<div id="carte" class="schema vert">
-					{{ carte|safe }}
+					<figure>
+	                      			<embed type="image/svg+xml" src="{{ url_for('static', filename='image/'+carte) }}" />
+		   	                </figure>
+
 				</div>
 				<div id="courbe" class="schema hor">
 					<img src="{{ url_for('static', filename='image/'+volume_mj+'.png') }}" alt="Volume d'annonces par {{ lib_unite }}" />

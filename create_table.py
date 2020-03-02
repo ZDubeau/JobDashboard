@@ -25,35 +25,35 @@ def connect():
 
 commands = (
     """
-    DROP TABLE offre_intitule CASCADE;
+    DROP TABLE IF EXISTS offre_intitule CASCADE;
     """
     ,
     """
-    DROP TABLE offre_secteur CASCADE;
+    DROP TABLE IF EXISTS offre_secteur CASCADE;
     """
     ,
     """
-    DROP TABLE intitule CASCADE;
+    DROP TABLE IF EXISTS intitule CASCADE;
     """
     ,
     """
-    DROP TABLE secteur CASCADE;
+    DROP TABLE IF EXISTS secteur CASCADE;
     """
     ,
     """
-    DROP TABLE ville CASCADE;
+    DROP TABLE IF EXISTS ville CASCADE;
     """
     ,
     """
-    DROP TABLE departement CASCADE;
+    DROP TABLE IF EXISTS departement CASCADE;
     """
     ,
     """
-    DROP TABLE region CASCADE;
+    DROP TABLE IF EXISTS region CASCADE;
     """
     ,
     """
-    DROP TABLE offre CASCADE;
+    DROP TABLE IF EXISTS offre CASCADE;
     """
     ,
 

@@ -199,6 +199,12 @@ def insertion(annonces):
 
         clean = pandas_func(annonces)
         
+        sql = "SELECT id FROM offre WHERE ref = %s AND site_origine = %s;"
+        cur.execute(sql,(clean["Reference"][0],clean["Site_origine"][0]))
+
+        exists = cur.fetchall()
+        if len(exists):
+            return None
         
         if clean["ville"].get(0):
             print(clean["ville"])
