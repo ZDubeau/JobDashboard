@@ -15,13 +15,13 @@
 
 			<h1>État du marché au {{ aujourdhui}}</h1>
 			<p>{{ nb_today }} nouvelles annonces, {{ nb_total }} annonces dans la base</p>
+
 			<div id="content">
 				<div class="schema vert carte">
 					<h4>Carte par région</h4>
 					<figure>
 	                      			<embed type="image/svg+xml" src="{{ url_for('static', filename='image/'+carte_reg) }}" />
 		   	                </figure>
-
 				</div>
                                 <div class="schema hor carte">
 					<h4>Carte par département</h4>

@@ -12,11 +12,12 @@ psycopg2-binary = "*"
 pytest = "*"
 plotly = "*"
 seaborn = "*"
+<<<<<<< HEAD
+requests = "*"
+=======
 pandas = "*"
 flask = "*"
-pygal = "*"
-ipython = "*"
-pygal-maps-fr = "*"
+>>>>>>> 9eeec5df5ef669154c99eee8736d6b91d6e16405
 
 [requires]
 python_version = "3.7"

@@ -1,6 +1,5 @@
 from flask import Flask, redirect, render_template, request, url_for
 from . import diagrammes as dg
-from . import pygalRegDep as pg
 
 
 app = Flask(__name__)

@@ -24,7 +24,11 @@
 #page{
 	clear: both;
 	border-radius: 16px;
+<<<<<<< HEAD
 	height: 1200px;
+=======
+	height: 592px;
+>>>>>>> a2ff410124407cf748e53248a9471698dee6417f
 	-webkit-border-radius: 16px;
 }
 
@@ -35,6 +39,7 @@
 
 .schema{
 	float: left;
+<<<<<<< HEAD
 	margin-left: 0px;
 	height: 567px;
 	width: 49.8%;
@@ -44,24 +49,44 @@
 	margin: 0px;
 	width: 100%;
 }
+=======
+	margin-left: 82px;
+	height: 500px;
+	width: 400px;
+	background-color: yellow;
+}
+
+>>>>>>> a2ff410124407cf748e53248a9471698dee6417f
 .hor, .vert{
 	padding: 0px;
 }
 
 .hor{
+<<<<<<< HEAD
 	margin-left: 0px;
 	float: left;
  	height: 567px;	
 	width: 49.8%;
+=======
+	margin-left: 60px;
+	float: left;
+ 	height: 50%;	
+	width: 55%;
+>>>>>>> a2ff410124407cf748e53248a9471698dee6417f
 }
 
 .hor img{
 	width: 100%;
 }
 
+<<<<<<< HEAD
 
 #courbe.vert{
 	clear:both;
+=======
+#courbe{
+	background-color: lightblue;
+>>>>>>> a2ff410124407cf748e53248a9471698dee6417f
 }
 
 .schema h4{

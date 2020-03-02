@@ -6,7 +6,7 @@ import traceback
 
 def connect():
     """ Connect to the PostgreSQL database server """
-
+    conn = None
     try:
         # connect to the PostgreSQL server
         print('Connecting to the PostgreSQL database...')
@@ -16,43 +16,44 @@ def connect():
                                 password = "dashboard",
                                 port = 5432)
 
-    except:
+    except Exception as inst:
             print("I am unable to connect to the database")
+            print(inst)
     
     return conn
 
 
 commands = (
     """
-    DROP TABLE IF EXISTS offre_intitule CASCADE;
+    DROP TABLE offre_intitule CASCADE;
     """
     ,
     """
-    DROP TABLE IF EXISTS offre_secteur CASCADE;
+    DROP TABLE offre_secteur CASCADE;
     """
     ,
     """
-    DROP TABLE IF EXISTS intitule CASCADE;
+    DROP TABLE intitule CASCADE;
     """
     ,
     """
-    DROP TABLE IF EXISTS secteur CASCADE;
+    DROP TABLE secteur CASCADE;
     """
     ,
     """
-    DROP TABLE IF EXISTS ville CASCADE;
+    DROP TABLE ville CASCADE;
     """
     ,
     """
-    DROP TABLE IF EXISTS departement CASCADE;
+    DROP TABLE departement CASCADE;
     """
     ,
     """
-    DROP TABLE IF EXISTS region CASCADE;
+    DROP TABLE region CASCADE;
     """
     ,
     """
-    DROP TABLE IF EXISTS offre CASCADE;
+    DROP TABLE offre CASCADE;
     """
     ,
 
