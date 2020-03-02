@@ -4,8 +4,6 @@
 		<meta charset="UTF-8"/>
 		<title>Job Dashbard</title>
 		<link rel="stylesheet" href="main.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script type="text/javascript" src="http://kozea.github.com/pygal.js/latest/pygal-tooltips.min.js"></script>
 	</head>
 	<body>
 		<div class="onglet actif onglet_gauche">État du marché</div>
@@ -16,28 +14,13 @@
 			
 			<div>
 				<div id="carte" class="schema vert">
-					<p> Carte par Région </p>
-                    <figure>
-                      <embed type="image/svg+xml" src="Graphs/carte_region_7.svg" />
-                    </figure>
+					<p> carte </p>
 				</div>
-				<div id="carte" class="schema vert">
-					<p> Carte par Département </p>
-                    <figure>
-                      <embed type="image/svg+xml" src="Graphs/carte_departement_7.svg" />
-                    </figure>
+				<div id="courbe" class="schema hor">
+					<p> courbe </p>
 				</div>
-				<div id="camembert" class="schema vert">
-					<p> Camembert par Régions </p>
-                    <figure>
-                      <embed type="image/svg+xml" src="Graphs/pie_chart_regions_7.svg" />
-                    </figure>
-				</div>
-                <div id="camembert" class="schema vert">
-					<p> Camembert par Département </p>
-                    <figure>
-                      <embed type="image/svg+xml" src="Graphs/pie_chart_departement_7.svg" />
-                    </figure>
+				<div id="camembert" class="schema hor">
+					<p> camembert </p>
 				</div>
 			</div>
 		</div>

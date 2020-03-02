@@ -1,6 +1,5 @@
 from flask import Flask, redirect, render_template, request, url_for
 from . import diagrammes as dg
-from . import pygalRegDep as pg
 
 
 app = Flask(__name__)
@@ -15,7 +14,7 @@ def get_homepage():
     aujourdhui = ('0' if len(str(hui.day))==1 else "")+str(hui.day)+"-"+('0' if len(str(hui.month))==1 else "")+str(hui.month)+"-"+str(hui.year)
     nb_today, nb_total = dg.count_annonces()
     volume_mj,lib_unite = dg.get_volume_chart(volume_unit)
-    carte = pg.get_infos()
+    carte = dg.get_map_chart()
     camembert = dg.get_part_chart()
 
     return render_template(

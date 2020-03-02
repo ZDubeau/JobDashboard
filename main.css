@@ -23,9 +23,9 @@ div{
 
 #page{
 	clear: both;
-	border-radius: 4px;
+	border-radius: 16px;
 	height: 592px;
-	-webkit-border-radius: 4px;
+	-webkit-border-radius: 16px;
 }
 
 #page div{
@@ -38,16 +38,9 @@ div{
 
 #carte{
 	float: left;
-	margin-left: 0px;
-	height: 550px;
-	width: 650px;
-	background-color: yellow;
-}
-#camembert{
-	float: left;
-	margin-left: 0px;
-	height: 550px;
-	width: 650px;
+	margin-left: 82px;
+	height: 500px;
+	width: 400px;
 	background-color: yellow;
 }
 
@@ -56,10 +49,10 @@ div{
 }
 
 .hor{
-	margin-left: 5px;
+	margin-left: 60px;
 	float: left;
-	height: 300px;
-	width: 400px;
+	height: 244px;
+	width: 700px;
 }
 
 #courbe{

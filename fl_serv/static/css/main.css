@@ -24,7 +24,7 @@ div{
 #page{
 	clear: both;
 	border-radius: 16px;
-	height: 625px;
+	height: 592px;
 	-webkit-border-radius: 16px;
 }
 
@@ -38,30 +38,26 @@ div{
 
 #carte{
 	float: left;
-	margin-left: 7px;
+	margin-left: 82px;
 	height: 500px;
-	width: 630px;
+	width: 400px;
 	background-color: yellow;
 }
-#carte figure{
-	margin: 0;
-	width: 100%;
-}
+
 .hor, .vert{
 	padding: 2px;
 }
 
 .hor{
-	margin-left: 10px;
+	margin-left: 60px;
 	float: left;
  	height: 50%;	
-	width: 50%;
+	width: 55%;
 }
 
 .hor img{
 	height: 100%;
 }
-
 
 #courbe{
 	background-color: lightblue;
