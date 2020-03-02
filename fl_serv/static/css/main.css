@@ -36,8 +36,8 @@
 .schema{
 	float: left;
 	margin-left: 0px;
-	height: 527px;
-	width: 662px;
+	height: 567px;
+	width: 49.8%;
 }
 
 .carte figure{
@@ -51,8 +51,8 @@
 .hor{
 	margin-left: 0px;
 	float: left;
- 	height: 527px;	
-	width: 661px;
+ 	height: 567px;	
+	width: 49.8%;
 }
 
 .hor img{
